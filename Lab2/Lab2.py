@@ -14,4 +14,3 @@ def find_three_sum(array, P):
         return False        
         
 print(find_three_sum(array, P))
- 
