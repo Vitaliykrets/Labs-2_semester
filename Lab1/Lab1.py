@@ -8,9 +8,9 @@ def backyard(m, n):
         row = list(map(int, input().split()))
         array.append(row)
 
-    for x in range(m):
-        for y in range(n):
-            if x % 2 == 0:
+    for y in range(m):
+        for x in range(n):
+            if y % 2 == 0:
                 result.append(array[x][y])
             else:
                 result.append(array[x][n - 1 - y])
