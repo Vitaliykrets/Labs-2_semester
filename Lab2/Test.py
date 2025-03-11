@@ -1,16 +1,15 @@
 import unittest
 
 def find_three_sum(array, P):
-        
-        for num_1 in range(len(array)):
-                value = list()
-                for num_2 in range(num_1 + 1, len(array)):
-                        num_3 = P - array[num_1] - array[num_2]
-                        if num_3 in value and num_3 != array[num_1] and num_3 != array[num_2]:
+        for i in range(len(array)):
+                value = set()  
+                for j in range(i + 1, len(array)):
+                        num_3 = P - array[i] - array[j]
+                        if num_3 in value:
                                 return True
-                        value.append(array[num_2])
-                        
+                        value.add(array[j])
         return False
+        
 
 class Test_Robot_Find_Three_sum(unittest.TestCase):
     def test_case_1(self):
