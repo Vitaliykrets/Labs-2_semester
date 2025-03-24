@@ -8,10 +8,15 @@ class BinaryTree:
 
 def find_successor(node):
     if node.right:
-        return node.right  
+        current = node.right
+        while current.left:
+            current = current.left
+        return current
+    
     current = node
     while current.parent and current.parent.right == current:
         current = current.parent
+        
     if current.parent:
         return current.parent
     return None
@@ -35,10 +40,9 @@ if __name__ == "__main__":
     root.right.left.parent = root.right
     root.right.right.left.parent = root.right.right
 
-    node = root
+    node = root.right
     successor = find_successor(node)
     if successor:
         print(f"Successor for a node {node.data} is a node with value {successor.data}")
     else:
         print(f"Successor for a node {node.data} not found")
-        
