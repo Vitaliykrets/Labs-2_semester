@@ -3,46 +3,49 @@ class BinaryTree:
         self.data = data
         self.left = None
         self.right = None
-        self.parent = None
 
 
-def find_successor(node):
-    if node.right:
-        current = node.right
-        while current.left:
-            current = current.left
-        return current
-    
-    current = node
-    while current.parent and current.parent.right == current:
-        current = current.parent
-        
-    if current.parent:
-        return current.parent
-    return None
+def inorder_traversal(node, result=None):
+    if result is None:
+        result = []
+    if node:
+        inorder_traversal(node.left, result)
+        result.append(node.data)
+        inorder_traversal(node.right, result)
+    return result
+
+
+def find_successor(root, target): 
+    successor = None
+    min_distance = float('inf')
+
+    for i, value in enumerate(inorder_list):
+        if value > target:
+            distance = abs(i - inorder_list.index(target))
+            if distance < min_distance:
+                min_distance = distance
+                successor = value
+                
+    return successor
 
 
 if __name__ == "__main__":
-    root = BinaryTree(10)
-    root.left = BinaryTree(5)
-    root.right = BinaryTree(15)
-    root.left.left = BinaryTree(3)
+    root = BinaryTree(11)
+    root.left = BinaryTree(10)
+    root.right = BinaryTree(9)
     root.left.right = BinaryTree(7)
-    root.right.right = BinaryTree(20)
-    root.right.left = BinaryTree(12)
-    root.right.right.left = BinaryTree(19) 
+    root.right.left = BinaryTree(3)
+    root.left.left = BinaryTree(5)
+    root.right.right = BinaryTree(12)
 
-    root.left.parent = root
-    root.right.parent = root
-    root.left.left.parent = root.left
-    root.left.right.parent = root.left
-    root.right.right.parent = root.right
-    root.right.left.parent = root.right
-    root.right.right.left.parent = root.right.right
-
-    node = root.right
-    successor = find_successor(node)
+    inorder_list = inorder_traversal(root)
+    print(f"In-order traversal list: {inorder_list}")  
+    
+    target = int(input("Enter a node value to find it`s successor: "))
+    
+    successor = find_successor(root, target)
+    
     if successor:
-        print(f"Successor for a node {node.data} is a node with value {successor.data}")
+        print(f"Successor for a node {target} is a node with value {successor}")
     else:
-        print(f"Successor for a node {node.data} not found")
+        print(f"Successor for a node {target} not found")

@@ -5,22 +5,30 @@ class BinaryTree:
         self.data = data
         self.left = None
         self.right = None
-        self.parent = None
+        self.parent = None  
 
-def find_successor(node):
-    if node.right:
-        successor = node.right
-        while successor.left:
-            successor = successor.left
-        return successor
 
-    current = node
-    while current.parent and current.parent.right == current:
-        current = current.parent
+def inorder_traversal(node, result=None):
+    if result is None:
+        result = []
+    if node:
+        inorder_traversal(node.left, result)
+        result.append(node.data)
+        inorder_traversal(node.right, result)
+    return result
 
-    if current.parent:
-        return current.parent
-    return None
+
+def find_successor(node): 
+    inorder_list = inorder_traversal(node)
+    
+    successor = None
+    for i in range(len(inorder_list) - 1):
+        if inorder_list[i] == node.data:
+            successor = inorder_list[i + 1] 
+            break
+    
+    return successor
+
 
 class TestFindInOrderTraversal(unittest.TestCase):
     def test_case_1(self):
@@ -41,7 +49,7 @@ class TestFindInOrderTraversal(unittest.TestCase):
 
         node = root.right
         successor = find_successor(node)
-        self.assertEqual(successor.data, 20)
+        self.assertEqual(successor, 20)
 
     def test_case_2(self):
         root = BinaryTree(50)
@@ -61,7 +69,7 @@ class TestFindInOrderTraversal(unittest.TestCase):
 
         node = root.right
         successor = find_successor(node)
-        self.assertEqual(successor.data, 80)
+        self.assertEqual(successor, 80)
 
     def test_case_3(self):
         root = BinaryTree(5)
@@ -81,8 +89,7 @@ class TestFindInOrderTraversal(unittest.TestCase):
 
         node = root.right
         successor = find_successor(node)
-        self.assertEqual(successor.data, 8)
+        self.assertEqual(successor, 8)
 
 if __name__ == '__main__':
     unittest.main()
-    
