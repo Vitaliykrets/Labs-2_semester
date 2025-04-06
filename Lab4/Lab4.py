@@ -47,9 +47,6 @@ class PriorityQueue:
             self.heap[index], self.heap[largest] = self.heap[largest], self.heap[index]
             self.heapify_down(largest)
 
-    def peek(self):
-        return self.heap[0] if self.heap else "The queue is empty"
-
     def display(self):
         print("A queue with priorities:", self.heap)
 
@@ -63,3 +60,4 @@ if __name__ == "__main__":
     pq.display()
     print("The highest priority: ", pq.extract_max())
     pq.display()
+    
