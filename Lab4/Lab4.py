@@ -47,6 +47,12 @@ class PriorityQueue:
             self.heap[index], self.heap[largest] = self.heap[largest], self.heap[index]
             self.heapify_down(largest)
 
+    def peek(self):
+        if self.heap:
+            return self.heap[0]
+        else:
+            return "Queue is empty" 
+    
     def display(self):
         print("A queue with priorities:", self.heap)
 
