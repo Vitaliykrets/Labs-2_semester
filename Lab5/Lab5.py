@@ -14,26 +14,30 @@ def read_input(file):
     return start, end, rows, cols, matrix
 
 def BFS_shortest_path(start, end, rows, cols, matrix):
-    visited = [[False for _ in range(cols)] for _ in range(rows)]
-    queue = [(start[0], start[1], 0)]
-    visited[start[0]][start[1]] = True
+    if matrix[start[0]][start[1]] == 0 or matrix[end[0]][end[1]] == 0:
+        return -1
+    else:   
+        visited = [[False for _ in range(cols)] for _ in range(rows)]
+        queue = [(start[0], start[1], 0)]
+        visited[start[0]][start[1]] = True
 
-    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
-    while queue:
-        x, y, dist = queue.pop(0)
+        while queue:
+            x, y, dist = queue.pop(0)
 
-        if (x, y) == end:
-            return dist
+            if (x, y) == end:
+                return dist
 
-        for dx, dy in directions:
-            n_x, n_y = x + dx, y + dy
+            for dx, dy in directions:
+                n_x, n_y = x + dx, y + dy
 
-            if 0 <= n_x < rows and 0 <= n_y < cols and matrix[n_x][n_y] == 1 and not visited[n_x][n_y]:
-                visited[n_x][n_y] = True
-                queue.append((n_x, n_y, dist + 1))
+                if 0 <= n_x < rows and 0 <= n_y < cols and matrix[n_x][n_y] == 1 and not visited[n_x][n_y]:
+                    visited[n_x][n_y] = True
+                    queue.append((n_x, n_y, dist + 1))
 
-    return -1
+        return -1
+
 
 
 def output(file, result):
