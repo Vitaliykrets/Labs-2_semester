@@ -1,19 +1,3 @@
-class Graph:
-    def __init__(self):
-        self.nodes = {}
-        
-    def add_node(self, value):
-        if value not in self.nodes:
-            self.nodes[value] = []
-            
-    def add_edge(self, from_node, to_node):
-        if from_node in self.nodes and to_node in self.nodes:
-            self.nodes[from_node].append[to_node]
-            
-
-        
-        
-
 def read_input(file):
     with open(file, "r") as f:
         lines = f.readlines()
@@ -29,31 +13,56 @@ def read_input(file):
 
     return start, end, rows, cols, matrix
 
+
+class Graph:
+    def __init__(self, matrix, rows, cols):
+        self.adj_list = {}
+        self.rows = rows
+        self.cols = cols
+        self.build_graph(matrix)
+
+    def in_bounds(self, x, y):
+        return 0 <= x < self.rows and 0 <= y < self.cols
+
+    def build_graph(self, matrix):
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        for x in range(self.rows):
+            for y in range(self.cols):
+                if matrix[x][y] == 1:
+                    node = (x, y)
+                    self.adj_list[node] = []
+                    for dx, dy in directions:
+                        nx, ny = x + dx, y + dy
+                        if self.in_bounds(nx, ny) and matrix[nx][ny] == 1:
+                            self.adj_list[node].append((nx, ny))
+
+
 class BFS:
-    def BFS_shortest_path(start, end, rows, cols, matrix):
-        if matrix[start[0]][start[1]] == 0 or matrix[end[0]][end[1]] == 0:
+    def __init__(self, graph):
+        self.graph = graph
+
+    def shortest_path(self, start, end):
+        if start not in self.graph.adj_list or end not in self.graph.adj_list:
             return -1
-        else:   
-            visited = [[False for _ in range(cols)] for _ in range(rows)]
-            queue = [(start[0], start[1], 0)]
-            visited[start[0]][start[1]] = True
 
-            directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        visited = []
+        queue = [(start, 0)]
+        visited.append(start)
+        i = 0
 
-            while queue:
-                x, y, dist = queue.pop(0)
+        while i < len(queue):
+            current, dist = queue[i]
+            i += 1
 
-                if (x, y) == end:
-                    return dist
+            if current == end:
+                return dist
 
-                for dx, dy in directions:
-                    n_x, n_y = x + dx, y + dy
+            for neighbor in self.graph.adj_list.get(current, []):
+                if neighbor not in visited:
+                    visited.append(neighbor)
+                    queue.append((neighbor, dist + 1))
 
-                    if 0 <= n_x < rows and 0 <= n_y < cols and matrix[n_x][n_y] == 1 and not visited[n_x][n_y]:
-                        visited[n_x][n_y] = True
-                        queue.append((n_x, n_y, dist + 1))
-
-            return -1
+        return -1
 
 
 def output(file, result):
@@ -66,8 +75,11 @@ def main():
     output_file_path = "Output.txt"
 
     start, end, rows, cols, matrix = read_input(input_file)
-    shortest_distance = BFS_shortest_path(start, end, rows, cols, matrix)
+    graph = Graph(matrix, rows, cols)
+    bfs = BFS(graph)
+    shortest_distance = bfs.shortest_path(start, end)
     output(output_file_path, shortest_distance)
+
 
 if __name__ == "__main__":
     main()
