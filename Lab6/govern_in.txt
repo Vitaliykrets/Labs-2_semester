@@ -1,0 +1,7 @@
+visa foreignpassport
+visa hotel
+visa bankstatement
+bankstatement nationalpassport
+hotel creditcard
+creditcard nationalpassport
+nationalpassport birthcertificate
