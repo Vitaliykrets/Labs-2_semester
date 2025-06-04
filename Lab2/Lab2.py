@@ -10,7 +10,7 @@ def find_three_sum(array, P):
                         num_3 = P - array[i] - array[j]
                         
                         if num_3 in value:
-                                return True, x
+                                return True
                         
                         value.add(array[j])
                         
