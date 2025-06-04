@@ -8,9 +8,13 @@ def find_three_sum(array, P):
                 for j in range(i + 1, len(array)):  
                         x += 1
                         num_3 = P - array[i] - array[j]
+                        
                         if num_3 in value:
                                 return True, x
+                        
                         value.add(array[j])
+                        
         return False
+
 
 print(find_three_sum(array, P))
