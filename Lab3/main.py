@@ -15,15 +15,17 @@ def inorder_traversal(node, result=None):
     return result
 
 
-def find_successor(root, target_node):
-    inorder_list = inorder_traversal(root)
-    
+def find_successor(root, target): 
     successor = None
-    for i in range(len(inorder_list) - 1):
-        if inorder_list[i] == target_node.data:
-            successor = inorder_list[i + 1]
-            break
-            
+    min_distance = float('inf')
+
+    for i, value in enumerate(inorder_list):
+        if value > target:
+            distance = abs(i - inorder_list.index(target))
+            if distance < min_distance:
+                min_distance = distance
+                successor = value
+                
     return successor
 
 
@@ -39,7 +41,7 @@ if __name__ == "__main__":
     inorder_list = inorder_traversal(root)
     print(f"In-order traversal list: {inorder_list}")  
     
-    target = int(input("Enter a node value to find it`s successor: "))
+    target = int(input("Enter a node value to find its successor: "))
     
     successor = find_successor(root, target)
     
