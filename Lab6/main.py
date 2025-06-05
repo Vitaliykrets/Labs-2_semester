@@ -53,8 +53,8 @@ class Graph:
 
 def main():
     graph = Graph()
-    govern_in = "govern_in.txt"
-    govern_out = "govern_out.txt"
+    govern_in = "govern_in"
+    govern_out = "govern_out"
 
     graph.read_input(govern_in)
     sorted_list = graph.topological_sort()
