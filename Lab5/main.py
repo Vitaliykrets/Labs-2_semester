@@ -84,5 +84,11 @@ def main():
     output(output_file_path, shortest_distance)
 
 
+def BFS_shortest_path(start, end, rows, cols, matrix):
+    graph = Graph(matrix, rows, cols)
+    bfs = BFS(graph)
+    return bfs.shortest_path(start, end)
+
+
 if __name__ == "__main__":
     main()

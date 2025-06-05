@@ -1,5 +1,5 @@
 import unittest
-from Lab5 import BFS_shortest_path 
+from Lab5.main import BFS_shortest_path
 
 class TestBFS(unittest.TestCase):
     def test_1(self):
