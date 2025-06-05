@@ -1,5 +1,5 @@
 import unittest
-from Lab7 import search
+from Lab7.main import search
 
 class TestRabinKarp(unittest.TestCase):
     def test_case_1(self):
@@ -11,6 +11,7 @@ class TestRabinKarp(unittest.TestCase):
         
         self.assertEqual(result, expected_result)
 
+
     def test_case_2(self):
         haystack = "ABCDABCDABCF!"
         needle = "H"
@@ -20,6 +21,7 @@ class TestRabinKarp(unittest.TestCase):
         
         self.assertEqual(result, expected_result)
 
+
     def test_case_3(self):
         haystack = "AABAACAADAABAABA"
         needle = ""
@@ -28,6 +30,7 @@ class TestRabinKarp(unittest.TestCase):
         result = search(haystack, needle)
         
         self.assertEqual(result, expected_result)
+
 
     def test_case_4(self):
         haystack = "sh"
