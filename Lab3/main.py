@@ -1,113 +1,51 @@
-class TreeNode:
-    def __init__(self, value):
-        self.value = value
+class BinaryTree:
+    def __init__(self, data):
+        self.data = data
         self.left = None
         self.right = None
 
-class BinaryTree:
-    def __init__(self):
-        self.root = None
 
-    def insert_nodes(self, nodes):
-        if not nodes:
-            return
-        node_dict = {}
-        for line in nodes:
-            values = line.split()
-            if values[0] not in node_dict:
-                node_dict[values[0]] = TreeNode(int(values[0]))
-            node = node_dict[values[0]]
-            if not self.root:
-                self.root = node
-            if values[1] != "None":
-                if values[1] not in node_dict:
-                    node_dict[values[1]] = TreeNode(int(values[1]))
-                node.left = node_dict[values[1]]
-            if values[2] != "None":
-                if values[2] not in node_dict:
-                    node_dict[values[2]] = TreeNode(int(values[2]))
-                node.right = node_dict[values[2]]
-
-    def inorder_traversal(self, node):
+def inorder_traversal(node, result=None):
+    if result is None:
         result = []
-        stack = []
-        current = node
+    if node:
+        inorder_traversal(node.left, result)
+        result.append(node.data)
+        inorder_traversal(node.right, result)
+    return result
 
-        while stack or current:
-            while current:
-                stack.append(current)
-                current = current.left
-            
-            current = stack.pop()
-            result.append(current.value)
-            current = current.right
-        
-        return result
-    # def inorder_traversal(self, node, result=None):
-    #     if result is None:
-    #         result = []
-    #     if node:
-    #         self.inorder_traversal(node.left, result)
-    #         result.append(node.value)
-    #         self.inorder_traversal(node.right, result)
-    #     return result
 
-    def find_successor(self, inorder_values, target):
-        successor = None
-        min_distance = float('inf')
+def find_successor(root, target): 
+    successor = None
+    min_distance = float('inf')
 
-        for i, value in enumerate(inorder_values):
-            if value > target:
-                distance = abs(i - inorder_values.index(target))  
-                if distance < min_distance:
-                    min_distance = distance
-                    successor = value
-        return successor
-
-    
-    def print_tree(self, node, indent="", last='updown'):
-        if node != None:
-            if last == 'updown':  
-                print(f"{indent}Root: {node.value}")
-                indent += "    "
-            elif last == 'left':  
-                print(f"{indent}L--- {node.value}")
-                indent += "|   "
-            elif last == 'right':  
-                print(f"{indent}R--- {node.value}")
-                indent += "    "
-            
-            if node.left is None and node.right is None:  
-                print(f"{indent}L--- None")
-                print(f"{indent}R--- None")
-            else:
-                if node.left:
-                    self.print_tree(node.left, indent, 'left')
-                else:
-                    print(f"{indent}L--- None")
+    for i, value in enumerate(inorder_list):
+        if value > target:
+            distance = abs(i - inorder_list.index(target))
+            if distance < min_distance:
+                min_distance = distance
+                successor = value
                 
-                if node.right:
-                    self.print_tree(node.right, indent, 'right')
-                else:
-                    print(f"{indent}R--- None")
+    return successor
 
 
-def read_tree_from_file(filename):
-    with open(filename, 'r') as file:
-        lines = [line.strip() for line in file if line.strip()]
-    tree = BinaryTree()
-    tree.insert_nodes(lines)
-    return tree
+if __name__ == "__main__":
+    root = BinaryTree(11)
+    root.left = BinaryTree(10)
+    root.right = BinaryTree(9)
+    root.left.right = BinaryTree(7)
+    root.right.left = BinaryTree(3)
+    root.left.left = BinaryTree(5)
+    root.right.right = BinaryTree(12)
 
-
-filename = "tree.txt" 
-tree = read_tree_from_file(filename)
-inorder_values = tree.inorder_traversal(tree.root)
-
-tree.print_tree(tree.root)
-
-print(f"In_order travelsal: {inorder_values}")
-
-for value in inorder_values:
-    successor = tree.find_successor(inorder_values, value)
-    print(f"Successor to {value}: {successor if successor else 'None'}")
+    inorder_list = inorder_traversal(root)
+    print(f"In-order traversal list: {inorder_list}")  
+    
+    target = int(input("Enter a node value to find it`s successor: "))
+    
+    successor = find_successor(root, target)
+    
+    if successor:
+        print(f"Successor for a node {target} is a node with value {successor}")
+    else:
+        print(f"Successor for a node {target} not found")

@@ -1,9 +1,0 @@
-11 10 9
-10 2 None
-2 None None
-9 3 6
-6 1 None
-1 None None
-3 None None
-
-
