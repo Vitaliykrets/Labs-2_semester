@@ -21,8 +21,10 @@ class Graph:
         self.cols = cols
         self.build_graph(matrix)
 
+
     def in_bounds(self, x, y):
         return 0 <= x < self.rows and 0 <= y < self.cols
+
 
     def build_graph(self, matrix):
         directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
@@ -40,6 +42,7 @@ class Graph:
 class BFS:
     def __init__(self, graph):
         self.graph = graph
+
 
     def shortest_path(self, start, end):
         if start not in self.graph.adj_list or end not in self.graph.adj_list:
